@@ -2,25 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Test</title>
-<!--     <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <h1>Hello!</h1>
-    <p>there</p>
-    <button id="button">Click Me!</button>
-    
+<h1>This is a test</h1>
+<p>What to try?</p>
+<button id="button">Try Me!</button>
 
-    <button onclick="randomWord()">Random Word</button>
-    <div id="word">Click to display a random word</div>
+<div id="form" style = "display:none">
+  <p id="result"></p>
+  <label for="someText">label</label>
+  <input type="text" id="someText">
+</div>
 
-    <div id="form" style = "display:none">
-        <p id="result"></p>
-        <input type="text" id="someText">
-    </div>
+<script>
+  const langs = ["en", "nl", "ru"]
 
-    <script src="script.js"></script>
+  const text = [
+    "First paragraph text",
+    "Second paragraph text",
+    "Third paragraph text",
+    "Fourth paragraph text",
+    "Fifth paragraph text"
+  ];
+
+  function getRandomText() {return text[Math.floor(Math.random() * text.length)];}
+
+  function getRandomLang() {return langs[Math.floor(Math.random() * langs.length)];}
+
+  document.getElementById("button").onclick = function() {
+    document.getElementById('form').style.display = '';
+    document.getElementById("result").innerHTML = getRandomLang() + ": " + getRandomText();
+  }
+</script>
 </body>
 </html>
