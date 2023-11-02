@@ -6,8 +6,12 @@ var text = [
   "Fifth paragraph text"
 ];
 
+function getRandowText() {
+  return text[Math.floor(Math.random() * text.length)];
+}
+
 document.getElementById("button").onclick = function() {
-  document.getElementById("result").innerHTML = text[Math.floor(Math.random() * text.length)];
+  document.getElementById("result").innerHTML = getRandomText();
 }
 
 let randomWords = [ 'foo', 'bar' ];
