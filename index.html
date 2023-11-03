@@ -91,7 +91,7 @@
   }
 
   function checkAnswer() {
-    if (document.getElementById('firstAnswer').value === currentWordFirstAnswer && document.getElementById('secondAnswer').value === currentWordSecondAnswer) {
+    if (document.getElementById('firstAnswer').value.toLowerCase() === currentWordFirstAnswer && document.getElementById('secondAnswer').value.toLowerCase() === currentWordSecondAnswer) {
       score++;
       document.getElementById("result").innerHTML = "<p>CORRECT!</p>"
     } else {
