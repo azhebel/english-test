@@ -4,35 +4,102 @@
     <meta charset="UTF-8">
     <title>English Test</title>
 </head>
-<body>
-<h1>This is a test</h1>
-<p>What to try?</p>
-<button id="button">Try Me!</button>
 
-<div id="form" style = "display:none">
-  <p id="result"></p>
-  <label for="someText">label</label>
-  <input type="text" id="someText">
+<body>
+
+<div id="score"></div>
+<button onclick="showProblem()">Try Me!</button>
+<div id="form" style="display: none">
+  <div id="question"></div>
+  <div id="answers">
+    <label for="firstAnswer" id="firstAnswerLabel"></label>
+    <input id="firstAnswer">
+    <br><br>
+    <label for="secondAnswer" id="secondAnswerLabel"></label>
+    <input id="secondAnswer">
+  </div>
+  <br>
+  <button onclick="checkAnswer()" id="checkButton">Check Answer</button>
+  <div id="result"></div>
 </div>
 
 <script>
-  const langs = ["en", "nl", "ru"]
+  var rounds = 0;
+  var score = 0;
+  var wrong = 0;
 
-  const text = [
-    "First paragraph text",
-    "Second paragraph text",
-    "Third paragraph text",
-    "Fourth paragraph text",
-    "Fifth paragraph text"
+  var currentWord;
+  var currentLang;
+  var currentWordQuestion;
+  var currentWordFirstAnswer;
+  var currentWordSecondAnswer;
+
+  function showScore() {
+    document.getElementById("score").innerHTML =
+            "<p>Round: " + rounds + "</p>" +
+            "<p>Score: " + score + "</p>" +
+            "<p>Wrong: " + wrong + "</p>"
+  }
+
+  showScore()
+
+  const langs = ["English", "Nederlands", "Русский"]
+
+  const words = [
+    ["thumbs up", "duimen omhoog", "пальцы вверх"],
+    ["think", "denk na", "думать"],
+    ["attention", "let op", "внимание"],
+    ["silence", "stilte", "тишина"],
+    ["hang up", "ophangen", "повесить"],
+    ["coat", "jas", "куртка"],
+    ["school bag", "shooltas", "школьная сумка"],
+    ["clear", "opruimen", "прозрачный"],
+    ["desk", "tafeltje", "парта"],
+    ["questions", "vragen", "вопросы"],
+    ["break", "pauze", "перемена"]
   ];
 
-  function getRandomText() {return text[Math.floor(Math.random() * text.length)];}
+  function getRandomWord() {return words[Math.floor(Math.random() * words.length)];}
 
-  function getRandomLang() {return langs[Math.floor(Math.random() * langs.length)];}
+  function showProblem() {
+    rounds++;
+    showScore();
+    const randomIndex = Math.floor(Math.random() * 3);
+    currentWord = getRandomWord();
+    console.log(currentWord)
+    currentLang = langs[randomIndex];
+    console.log(currentLang)
+    currentWordQuestion = currentWord[randomIndex]
 
-  document.getElementById("button").onclick = function() {
+    const otherLangs = langs.filter(function(lang) { return lang !== currentLang});
+    const otherWords = currentWord.filter(function(word) { return word !== currentWordQuestion});
+
     document.getElementById('form').style.display = '';
-    document.getElementById("result").innerHTML = getRandomLang() + ": " + getRandomText();
+
+    document.getElementById("question").innerHTML = "<p>" + currentLang + ": " + currentWordQuestion + "</p>";
+
+    document.getElementById("firstAnswerLabel").innerHTML = otherLangs[0]
+    document.getElementById('firstAnswer').value = ""
+    document.getElementById("secondAnswerLabel").innerHTML = otherLangs[1]
+    document.getElementById('secondAnswer').value = ""
+
+    document.getElementById("checkButton").style.display = '';
+    document.getElementById("result").style.display = '';
+
+    currentWordFirstAnswer = otherWords[0]
+    currentWordSecondAnswer = otherWords[1]
+  }
+
+  function checkAnswer() {
+    if (document.getElementById('firstAnswer').value === currentWordFirstAnswer && document.getElementById('secondAnswer').value === currentWordSecondAnswer) {
+      score++;
+      document.getElementById("result").innerHTML = "<p>CORRECT!</p>"
+    } else {
+      wrong++;
+      document.getElementById("result").innerHTML = "<p>WRONG! " + currentWordFirstAnswer + ", " + currentWordSecondAnswer + "</p>"
+    }
+    showScore();
+    document.getElementById("checkButton").style.display = 'none';
   }
 </script>
 </body>
